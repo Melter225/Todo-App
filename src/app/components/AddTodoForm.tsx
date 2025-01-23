@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { PlusCircle, Lock } from "lucide-react";
+import { PlusCircle, Lock, Calendar } from "lucide-react";
 import { useStore } from "../utils/store";
 
 interface AddTodoFormProps {
@@ -17,6 +17,7 @@ export default function AddTodoForm({ spaceId }: AddTodoFormProps) {
   const [todoText, setTodoText] = useState("");
   const [isPasswordProtected, setIsPasswordProtected] = useState(false);
   const [password, setPassword] = useState("");
+  const [deadline, setDeadline] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,11 +25,13 @@ export default function AddTodoForm({ spaceId }: AddTodoFormProps) {
       addTodo(
         spaceId,
         todoText.trim(),
-        isPasswordProtected ? password : undefined
+        isPasswordProtected ? password : undefined,
+        deadline || undefined
       );
       setTodoText("");
       setIsPasswordProtected(false);
       setPassword("");
+      setDeadline("");
     }
   };
 
@@ -46,6 +49,17 @@ export default function AddTodoForm({ spaceId }: AddTodoFormProps) {
           <PlusCircle className="mr-2 h-4 w-4" /> Add Todo
         </Button>
       </div>
+
+      <div className="flex items-center space-x-2">
+        <Calendar className="h-4 w-4 text-gray-500" />
+        <Input
+          type="date"
+          value={deadline}
+          onChange={(e) => setDeadline(e.target.value)}
+          className="flex-grow"
+        />
+      </div>
+
       <div className="flex items-center space-x-2">
         <Checkbox
           id="isPasswordProtected"
@@ -61,6 +75,7 @@ export default function AddTodoForm({ spaceId }: AddTodoFormProps) {
           Password protect
         </Label>
       </div>
+
       {isPasswordProtected && (
         <div className="flex items-center space-x-2">
           <Lock className="h-4 w-4 text-gray-500" />

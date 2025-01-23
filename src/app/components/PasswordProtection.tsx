@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Lock, Unlock } from "lucide-react";
@@ -26,6 +26,11 @@ export default function PasswordProtection({
       setError("Incorrect password");
     }
   };
+
+  // Reset error when input changes
+  useEffect(() => {
+    setError("");
+  }, [inputPassword]);
 
   if (children) {
     return (

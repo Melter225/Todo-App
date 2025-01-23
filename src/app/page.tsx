@@ -1,5 +1,6 @@
 import SpaceList from "./components/SpaceList";
 import Footer from "./components/Footer";
+import UpcomingTodosModal from "./components/UpcomingTodos";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
           Todo App
         </h1>
         <SpaceList />
+        <UpcomingTodosModal />
       </main>
       <Footer />
     </div>
