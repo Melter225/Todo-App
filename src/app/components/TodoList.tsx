@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,6 +9,7 @@ import { X, Trash2, Lock, Calendar } from "lucide-react";
 import AddTodoForm from "./AddTodoForm";
 import PasswordProtection from "./PasswordProtection";
 import { useStore } from "../utils/store";
+import { Todo } from "../utils/store";
 
 interface TodoListProps {
   spaceId: string;
@@ -21,7 +22,7 @@ export default function TodoList({ spaceId, onClose }: TodoListProps) {
 
   const todos = getTodosBySpaceId(spaceId);
   const space = getSpaceById(spaceId);
-  const [upcomingDeadlines] = useState<any[]>([]);
+  const [upcomingDeadlines] = useState<Todo[]>([]);
 
   return (
     <Card className="mt-8 bg-white dark:bg-gray-800">
@@ -47,7 +48,15 @@ export default function TodoList({ spaceId, onClose }: TodoListProps) {
                 className="text-sm text-yellow-800 dark:text-yellow-200"
               >
                 • {todo.text} (Deadline:{" "}
-                {new Date(todo.deadline).toLocaleDateString()})
+                {todo.deadline ? (
+                  <div className="text-sm text-gray-500 flex items-center">
+                    <Calendar className="h-4 w-4 mr-1" />
+                    {new Date(todo.deadline).toLocaleDateString("en-US", {
+                      timeZone: "UTC",
+                    })}
+                  </div>
+                ) : null}
+                )
               </div>
             ))}
           </div>

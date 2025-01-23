@@ -4,16 +4,17 @@ import React, { useState, useEffect } from "react";
 import { useStore } from "../utils/store";
 import { X, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Todo } from "../utils/store";
 
 export default function UpcomingTodosModal() {
-  const [upcomingTodos, setUpcomingTodos] = useState<any[]>([]);
+  const [upcomingTodos, setUpcomingTodos] = useState<Todo[]>([]);
   const [isVisible, setIsVisible] = useState(true);
   const { getUpcomingDeadlines } = useStore();
 
   useEffect(() => {
     const todos = getUpcomingDeadlines();
     setUpcomingTodos(todos);
-  }, []);
+  }, [getUpcomingDeadlines]);
 
   if (!isVisible || upcomingTodos.length === 0) return null;
 
@@ -40,7 +41,15 @@ export default function UpcomingTodosModal() {
             >
               <div className="font-medium">{todo.text}</div>
               <div className="text-sm text-gray-600 dark:text-gray-300">
-                Deadline: {new Date(todo.deadline).toLocaleDateString()}
+                Deadline:{" "}
+                {todo.deadline ? (
+                  <div className="text-sm text-gray-500 flex items-center">
+                    <Calendar className="h-4 w-4 mr-1" />
+                    {new Date(todo.deadline).toLocaleDateString("en-US", {
+                      timeZone: "UTC",
+                    })}
+                  </div>
+                ) : null}
               </div>
             </li>
           ))}
