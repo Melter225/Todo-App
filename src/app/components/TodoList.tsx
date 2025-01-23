@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { X, Check, Trash2, Lock } from "lucide-react";
+import { X, Trash2, Lock } from "lucide-react";
 import AddTodoForm from "./AddTodoForm";
 import PasswordProtection from "./PasswordProtection";
 import { useStore } from "../utils/store";
