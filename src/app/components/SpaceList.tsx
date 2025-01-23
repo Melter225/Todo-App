@@ -105,7 +105,7 @@ export default function SpaceList() {
               {space.isPasswordProtected ? (
                 <PasswordProtection
                   onUnlock={() => setSelectedSpace(space.id)}
-                  password={space.password}
+                  password={space.password || ""}
                 />
               ) : (
                 <Button
