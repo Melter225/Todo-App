@@ -92,15 +92,13 @@ export const useStore = create<Store>()(
         get().spaces.find((space) => space.id === spaceId),
       getUpcomingDeadlines: () => {
         const today = new Date();
-        const yesterday = new Date(today);
-        yesterday.setDate(today.getDate() - 1);
         const twoDaysFromNow = new Date(today);
         twoDaysFromNow.setDate(today.getDate() + 2);
 
         return get().todos.filter((todo) => {
           if (todo.completed || !todo.deadline) return false;
           const deadline = new Date(todo.deadline);
-          return deadline <= twoDaysFromNow && deadline >= yesterday;
+          return deadline <= twoDaysFromNow;
         });
       },
       unlockSpace: (spaceId) =>
